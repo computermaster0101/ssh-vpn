@@ -18,7 +18,7 @@ no addtional setup to make this virtual private network tunnel work*.
 
 <h3>Syntax</h3>
 <pre>
-tunClient.sh (presented with defaults)
+sshvpn.sh (presented with defaults)
                              (-s | --server "DEFAULT")?
                              (-p | --port "DEFAULT")?
                              (-u | --username "DEFAULT")?
