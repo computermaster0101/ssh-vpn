@@ -1,3 +1,4 @@
+<h3>Summary</h3>
 <pre>
 This script is used to tunnel to a remote network, not just a remote machine.
 Development and testing was done on Ubuntu 16.04 desktop with an Ubuntu 16.04 server. 
@@ -11,9 +12,10 @@ file, and delete the tun adapters.
 
 Other than a private certificate to access the server, there should be 
 no addtional setup to make this virtual private network tunnel work*.
+</pre>
 
-
-
+<h3>Syntax</h3>
+<pre>
 tunClient.sh (presented with defaults)
                              (-s | --server "DEFAULT")?
                              (-p | --port "DEFAULT")?
@@ -33,8 +35,10 @@ tunClient.sh (presented with defaults)
 -l | --local_address  : The ip address assigned to the local tun adapter.
 -r | --remote_address : The ip address assigned to the remote tun adapter.
 -c | --cidr_blocks    : The comma seperated list of cidr blocks to route through the tun adapter.
+</pre>
 
-
+<h3>Additional Details</h3>
+<pre>
 If default vaules are desired, they can be set on lines 40 - 65 of the script. 
 The default defaults are displayed below. Additionally, a private certificate 
 can be embeded into the script on lines 80-90
