@@ -41,9 +41,9 @@ tunClient.sh (presented with defaults)
 <pre>
 If default vaules are desired, they can be set on lines 40 - 65 of the script. 
 The default defaults are displayed below. Additionally, a private certificate 
-can be embeded into the script on lines 80-90
-
-
+can be embeded into the script on lines 80-90.
+</pre>
+<pre>
 function validate {
     if [ -z ${user+x} ]; then
       user="user"
