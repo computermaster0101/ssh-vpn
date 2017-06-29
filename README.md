@@ -87,7 +87,7 @@ fi
 </pre>
 <pre>
 The ssh command establishing the tunnel is below for convieniance. This is executed
-acter the adapters and routes have been setup on both the server and the client.
+after the adapters and routes have been setup on both the server and the client.
 
 ssh -C -n -w 0:0 -i ${cert} -p ${port} ${user}@${serv}
 </pre>
