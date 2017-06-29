@@ -1,3 +1,4 @@
+<pre>
 This script is used to tunnel to a remote network, not just a remote machine. It was creating using Ubuntu 16.04. There must be a cert provided for connection, either embeded in the script or on the filesystem.
 
 tunClient.sh (presented with defaults)
@@ -65,3 +66,4 @@ INSERT PRIVATE KEY HERE
 tunKeyWritten=yes
 fi
 }
+</pre>
