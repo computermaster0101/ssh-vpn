@@ -39,11 +39,11 @@ function options {
 function validate {
     if [ -z ${user+x} ]; then
       user="user"
-      echo "INFO --> Option --user was not specified defaulting to ${user}."
+      echo "INFO --> Option --username was not specified defaulting to ${user}."
     fi
     if [ -z ${serv+x} ]; then
       serv="example.com"
-      echo "INFO --> Option --serv was not specified defaulting to ${serv}."
+      echo "INFO --> Option --server was not specified defaulting to ${serv}."
     fi
     if [ -z ${port+x} ]; then
       port="22"
@@ -51,19 +51,19 @@ function validate {
     fi
     if [ -z ${cert+x} ]; then
       cert=".tunKey"
-      echo "INFO --> Option --cert was not specified defaulting to ${cert}."
+      echo "INFO --> Option --identity_file was not specified defaulting to ${cert}."
     fi
     if [ -z ${addr+x} ]; then
       addr="1.1.1.2"
-      echo "INFO --> Option --addr was not specified defaulting to ${addr}."
+      echo "INFO --> Option --local_address was not specified defaulting to ${addr}."
     fi
     if [ -z ${peer+x} ]; then
       peer="1.1.1.1"
-      echo "INFO --> Option --peer was not specified defaulting to ${peer}."
+      echo "INFO --> Option --remote_address was not specified defaulting to ${peer}."
     fi
     if [ -z ${frwd+x} ]; then
       frwd="192.168.0.0/24,192.168.1.0/24"
-      echo "INFO --> Option --frwd was not specified defaulting to ${frwd}."
+      echo "INFO --> Option --cidr_blocks was not specified defaulting to ${frwd}."
     fi
 }
 
