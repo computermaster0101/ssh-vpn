@@ -26,10 +26,8 @@ tunClient.sh (presented with defaults)
                              (-l | --local_address "DEFAULT")?
                              (-r | --remote_address "DEFAULT")?
                              (-c | --cidr_blocks "DEFAULT")?
-
-
-
-
+</pre>
+<pre>
 -s | --server         : The ip address or DNS address of the remote server.
 -p | --port           : The port listening for ssh connections on the remote server.
 -u | --username       : The username used for logging in and for sudo access on the remote server.
@@ -76,9 +74,8 @@ function validate {
       echo "INFO --> Option --frwd was not specified defaulting to ${frwd}."
     fi
 }
-
-
-
+</pre>
+<pre>
 function tunKeyWrite {
 if [ ! -f ${cert} ]; then
 echo "-----BEGIN RSA PRIVATE KEY-----
@@ -87,16 +84,14 @@ INSERT PRIVATE KEY HERE
 tunKeyWritten=yes
 fi
 }
-
-
-
+</pre>
+<pre>
 The ssh command establishing the tunnel is below for convieniance. This is executed
 acter the adapters and routes have been setup on both the server and the client.
 
 ssh -C -n -w 0:0 -i ${cert} -p ${port} ${user}@${serv}
+</pre>
 
-
-
-
+<pre>
 *(depending on linux distro)
 </pre>
