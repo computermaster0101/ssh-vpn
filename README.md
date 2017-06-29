@@ -2,14 +2,16 @@
 <pre>
 This script is used to tunnel to a remote network, not just a remote machine.
 Development and testing was done on Ubuntu 16.04 desktop with an Ubuntu 16.04 server. 
-
+</pre>
+<pre>
 There must be a cert provided for connection however, it can be embeded directoy into
 the script (see the below information for more details). When executed, this script will
 generate a server configuration script, send it to the server for execution, create the 
 local routes and adapters, then establish the tunnel. Once the tunnel is broken using 
 ctrl+c the script will reverse server configurations, delete the server configuration 
 file, and delete the tun adapters. 
-
+</pre>
+<pre>
 Other than a private certificate to access the server, there should be 
 no addtional setup to make this virtual private network tunnel work*.
 </pre>
