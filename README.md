@@ -1,5 +1,15 @@
 <pre>
-This script is used to tunnel to a remote network, not just a remote machine. It was creating using Ubuntu 16.04. There must be a cert provided for connection, either embeded in the script or on the filesystem.
+This script is used to tunnel to a remote network, not just a remote machine.
+Development and testing was done on Ubuntu 16.04 desktop with an Ubuntu 16.04 server. 
+
+There must be a cert provided for connection, 
+either embeded in the script or on the filesystem. When executed, this script will
+generate a server configuration script, send it to the server for execution, 
+create the local routes and adapters, then establish the tunnel. Once the tunnel
+is broken using ctrl+c the script will reverse server configurations, delete the
+server configuration file, and delete the tun adapters. Aside from having a private
+certificate to access the server, there should be no addtional setup to make this
+virtual private network tunnel work (depending on linux distro). 
 
 tunClient.sh (presented with defaults)
                              (-s | --server "DEFAULT")?
@@ -22,7 +32,9 @@ tunClient.sh (presented with defaults)
 -c | --cidr_blocks    : The comma seperated list of cidr blocks to route through the tun adapter.
 
 
-If default vaules are desired, they can be set on lines 40 - 65 of the script. The default defaults are displayed below. Additionally, a private certificate can be embeded into the script on lines 80-90
+If default vaules are desired, they can be set on lines 40 - 65 of the script. 
+The default defaults are displayed below. Additionally, a private certificate 
+can be embeded into the script on lines 80-90
 
 
 function validate {
@@ -66,4 +78,11 @@ INSERT PRIVATE KEY HERE
 tunKeyWritten=yes
 fi
 }
+
+
+
+The ssh command establishing the tunnel is below for convieniance. This is executed
+acter the adapters and routes have been setup on both the server and the client.
+
+ssh -C -n -w 0:0 -i ${cert} -p ${port} ${user}@${serv}
 </pre>
