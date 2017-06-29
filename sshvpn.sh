@@ -8,7 +8,7 @@ function global {
 
 function -h {
 cat <<USAGE
-USAGE: tunClient.sh (presented with defaults)
+USAGE: sshvpn.sh (presented with defaults)
                              (-s | --server "DEFAULT")?
                              (-p | --port "DEFAULT")?
                              (-u | --username "DEFAULT")?
