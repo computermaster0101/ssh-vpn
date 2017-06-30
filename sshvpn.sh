@@ -88,8 +88,8 @@ fi
 }
 
 function tunServerWrite {
-echo "echo \"${remoteSudoPass}\" | sudo -S chmod 700 tunServer > /dev/null 2>&1
-if [[ \"\$(ifconfig | grep tun0')\" == \"\" ]]; then
+echo "
+if [[ \"\$(sudo ip link show | grep tun0)\" == \"\" ]]; then
   echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
   echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward_use_pmtu
   sudo ip tuntap add mode tun tun0
@@ -98,16 +98,17 @@ if [[ \"\$(ifconfig | grep tun0')\" == \"\" ]]; then
   sudo iptables -t nat -A POSTROUTING -j MASQUERADE
   sudo iptables -P FORWARD ACCEPT
   sudo ufw allow proto any from ${addr}
-  sudo sed -i 's|PermitTunnel no|PermitTunnel yes|g' /etc/ssh/sshd_config
-  sudo service ssh restart > /dev/null
+  sudo set -i '/PermitTunnel/d' /etc/ssh/sshd_config
+  echo PermitTunnel yes | sudo tee -a /etc/ssh/sshd_config
+  sudo systemctl restart sshd.service > /dev/null
 else
   echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward
   echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward_use_pmtu
-  sudo ip tuntap del mode tun tun0
   sudo iptables -P FORWARD DROP
   sudo ufw delete allow proto any from ${addr}
-  sudo sed -i 's|PermitTunnel yes|PermitTunnel no|g' /etc/ssh/sshd_config
-  sudo service ssh restart > /dev/null
+  sudo sed -i '/PermitTunnel/d' /etc/ssh/sshd_config
+  echo PermitTunnel no | sudo tee -a /etc/ssh/sshd_config
+  sudo ip link delete tun0
   sudo rm ~/tunServer
 fi" | tee .tunServer > /dev/null 2>&1
 }
@@ -117,9 +118,15 @@ function process {
   echo Configuring Server
   scp -P ${port} -i ${cert} .tunServer ${user}@${serv}:~/tunServer > /dev/null 2>&1
   echo Enabling Server
-  ssh -i ${cert} -p ${port} -n ${user}@${serv} 'if [[ "$(ifconfig | grep tun0)" == "" ]]; then bash ~/tunServer > /dev/null 2>&1 && echo Server Enabled; else echo Server Already Enabled; fi'
+  ssh -i ${cert} -p ${port} -n ${user}@${serv} "
+if [[ \"\$(ip link show | grep tun0)\" == \"\" ]]
+then echo ${remoteSudoPass} | sudo -S bash ~/tunServer > /dev/null 2>&1
+echo Server Enabled
+else 
+echo Server Already Enabled
+fi"
   echo Configuring Client
-  if [[ "$(ifconfig | grep tun0)" == "" ]]; then
+  if [[ "$(ip link show | grep tun0)" == "" ]]; then
     echo ${localSudoPass} | sudo -S ls > /dev/null 2>&1
     sudo ip tuntap add mode tun tun0
     sudo ip link set tun0 up
@@ -136,9 +143,15 @@ function process {
   ssh -C -n -w 0:0 -i ${cert} -p ${port} ${user}@${serv} 'echo Connection Established' || echo
   echo Terminating Connection
   echo Disabling Server
-  ssh -i ${cert} -p ${port} ${user}@${serv} 'if [[ $(ifconfig | grep tun0) == "" ]]; then echo Server Already Disabled; else ~/tunServer > /dev/null 2>&1 && echo Server Disabled; fi'
+  ssh -i ${cert} -p ${port} -n ${user}@${serv} "
+if [[ \"\$(ip link show | grep tun0)\" == \"\" ]]; then 
+echo Server Already Disabled
+else
+echo ${remoteSudoPass} | sudo -S bash ~/tunServer > /dev/null 2>&1 
+echo Server Disabled 
+fi"
   echo Destroying Adapter
-  if [[ "$(ifconfig | grep tun0)" == "" ]]; then
+  if [[ "$(ip link show | grep tun0)" == "" ]]; then
     echo Adapter Already Destroyed
   else
     echo ${localSudoPass} | sudo -S ls > /dev/null 2>&1
