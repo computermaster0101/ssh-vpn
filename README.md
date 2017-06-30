@@ -4,7 +4,7 @@ This script is used to tunnel to a remote network, not just a remote machine.
 Development and testing was done on Ubuntu 16.04 desktop with an Ubuntu 16.04 server. 
 </pre>
 <pre>
-There must be a cert provided for connection however, it can be embeded directoy into
+There must be a cert provided for connection however, it can be embeded directly into
 the script (see the below information for more details). When executed, this script will
 generate a server configuration script, send it to the remote server, executes the 
 configuration on the remote server, creates the local routes and adapters, then establish 
