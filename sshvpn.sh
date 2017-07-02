@@ -98,7 +98,7 @@ if [[ \"\$(sudo ip link show | grep tun0)\" == \"\" ]]; then
   sudo iptables -t nat -A POSTROUTING -j MASQUERADE
   sudo iptables -P FORWARD ACCEPT
   sudo ufw allow proto any from ${addr}
-  sudo set -i '/PermitTunnel/d' /etc/ssh/sshd_config
+  sudo sed -i '/PermitTunnel/d' /etc/ssh/sshd_config
   echo PermitTunnel yes | sudo tee -a /etc/ssh/sshd_config
   sudo systemctl restart sshd.service > /dev/null
 else
