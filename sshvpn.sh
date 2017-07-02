@@ -104,11 +104,12 @@ if [[ \"\$(sudo ip link show | grep tun0)\" == \"\" ]]; then
 else
   echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward
   echo 0 | sudo tee /proc/sys/net/ipv4/ip_forward_use_pmtu
+  sudo ip link delete tun0
   sudo iptables -P FORWARD DROP
   sudo ufw delete allow proto any from ${addr}
   sudo sed -i '/PermitTunnel/d' /etc/ssh/sshd_config
   echo PermitTunnel no | sudo tee -a /etc/ssh/sshd_config
-  sudo ip link delete tun0
+  sudo systemctl restart sshd.service > /dev/null
   sudo rm ~/tunServer
 fi" | tee .tunServer > /dev/null 2>&1
 }
